@@ -1,5 +1,6 @@
 import React from 'react';
 import {interpolate, spring, useCurrentFrame, useVideoConfig} from 'remotion';
+import {scaleValue, useLayout} from '../lib/layout';
 import {theme} from '../lib/theme';
 import {secondsToFrames, toCharCues} from '../lib/timeline';
 import type {Timeline} from '../lib/types';
@@ -11,15 +12,17 @@ export const Subtitle: React.FC<{
 }> = ({timeline, top = theme.subtitle.top, fontSize = theme.subtitle.fontSize}) => {
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
+  const {scale} = useLayout();
+  const s = (value: number) => scaleValue(value, scale);
   const cues = toCharCues(timeline.words);
 
   return (
     <div
       style={{
         position: 'absolute',
-        top,
-        left: 30,
-        right: 30,
+        top: s(top),
+        left: s(30),
+        right: s(30),
         display: 'flex',
         justifyContent: 'center',
         zIndex: 30,
@@ -29,11 +32,11 @@ export const Subtitle: React.FC<{
       <div
         style={{
           display: 'inline-block',
-          maxWidth: theme.subtitle.maxWidth,
-          padding: '16px 26px',
-          borderRadius: 18,
+          maxWidth: s(theme.subtitle.maxWidth),
+          padding: `${s(16)}px ${s(26)}px`,
+          borderRadius: s(18),
           background: theme.subtitle.background,
-          boxShadow: '0 10px 40px #00000066',
+          boxShadow: `0 ${s(10)}px ${s(40)}px #00000066`,
         }}
       >
         {cues.map((cue, i) => {
@@ -43,16 +46,16 @@ export const Subtitle: React.FC<{
             extrapolateLeft: 'clamp',
             extrapolateRight: 'clamp',
           });
-          const y = interpolate(pop, [0, 1], [26, 0]);
+          const y = interpolate(pop, [0, 1], [s(26), 0]);
           return (
             <span
               key={i}
               style={{
                 display: 'inline-block',
-                fontSize,
+                fontSize: s(fontSize),
                 fontWeight: 800,
                 color: theme.colors.text,
-                marginRight: 2,
+                marginRight: s(2),
                 opacity,
                 scale: pop,
                 translate: `0 ${y}px`,

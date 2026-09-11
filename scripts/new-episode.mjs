@@ -3,11 +3,19 @@ import {join, resolve} from 'node:path';
 
 const slug = process.argv[2];
 if (!slug || slug.startsWith('--')) {
-  console.error('用法: node scripts/new-episode.mjs <slug> [--title "标题"]');
+  console.error('用法: node scripts/new-episode.mjs <slug> [--title "标题"] [--width 720 --height 1280 --fps 30]');
   process.exit(1);
 }
 const titleIndex = process.argv.indexOf('--title');
 const title = titleIndex >= 0 ? process.argv[titleIndex + 1] : slug;
+const numberArg = (name, fallback) => {
+  const index = process.argv.indexOf(`--${name}`);
+  const parsed = index >= 0 ? Number(process.argv[index + 1]) : NaN;
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
+};
+const width = numberArg('width', 720);
+const height = numberArg('height', 1280);
+const fps = numberArg('fps', 30);
 
 const root = resolve('.');
 const episodesDir = join(root, 'episodes');
@@ -44,9 +52,9 @@ export const ${exportName}: EpisodeConfig = {
   id: '${slug}',
   title: '${title}',
   slug: '${slug}',
-  fps: 30,
-  width: 720,
-  height: 1280,
+  fps: ${fps},
+  width: ${width},
+  height: ${height},
   tail: 0.3,
   manifest: manifest as Manifest,
   timelines: timelines as unknown as Record<number, Timeline>,
@@ -83,5 +91,5 @@ regenerateRegistry();
 console.log('\n下一步:');
 console.log(`  1. 编辑 episodes/${slug}/script.txt`);
 console.log(`  2. node scripts/tts.mjs --script episodes/${slug}/script.txt --out public/episodes/${slug}/voice --timeline-out episodes/${slug}/timeline`);
-console.log(`  3. 再跑一次本脚本生成 episode.tsx 并注册: node scripts/new-episode.mjs ${slug}${titleIndex >= 0 ? ` --title "${title}"` : ''}`);
+console.log(`  3. 再跑一次本脚本生成 episode.tsx 并注册: node scripts/new-episode.mjs ${slug}${titleIndex >= 0 ? ` --title "${title}"` : ''} --width ${width} --height ${height} --fps ${fps}`);
 console.log('  4. npm run studio');

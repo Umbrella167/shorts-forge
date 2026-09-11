@@ -1,8 +1,8 @@
 # AGENTS.md
 
-本仓库是一套**竖屏短视频生成框架**：用火山引擎豆包 TTS 生成配音（含字级时间轴），再用 Remotion 把每句台词渲染成一个分镜，拼成整片。
+本仓库是一套**短视频生成框架**：用火山引擎豆包 TTS 生成配音（含字级时间轴），再用 Remotion 把每句台词渲染成一个分镜，拼成整片。
 
-- 画布：**720 x 1280，30fps**（竖屏）
+- 分辨率/帧率由每期 `EpisodeConfig` 的 `width` / `height` / `fps` 决定，**任意分辨率**（默认 `720 x 1280`，30fps 竖屏）
 - 一期 = `episodes/<slug>/` 一个文件夹，新增一期不改公共代码
 - Remotion 版本：`4.0.523`（所有 `@remotion/*` 必须同版本）
 
@@ -93,7 +93,7 @@ npm run render -- <slug> out/<slug>.mp4
 2. **不要往 `defaultProps` 里传函数/组件**。Remotion 会序列化 `defaultProps`，函数会变成 `undefined`。`Composition` 只传 `episodeId`（字符串），组件内部从 `episodes/registry` 查配置。
 3. **注册表自动生成**。`episodes/registry.ts` 由 `new-episode.mjs` 扫描生成，不要手动维护；新增/删除一期后跑一次 `new-episode.mjs`。
 4. **时间戳从约 0.295s 起**（TTS 音频开头有静音）。字幕/动画要用 `timeline.words` 的真实时间驱动，不要假设从 0 开始。
-5. **视觉常量走 `lib/theme.ts`**（颜色、字体、字幕位置、画布尺寸），不要在组件里散落魔法值。
+5. **视觉常量走 `lib/theme.ts`**（颜色、字体、字幕位置、画布尺寸），不要在组件里散落魔法值。新组件用 `useLayout()` 的 `scale` + `scaleValue(v, scale)` 换算像素（按 720 宽设计稿缩放），保证任意分辨率不错位。
 6. **通用件优先复用**：`Background` / `Subtitle` / `PhoneFrame` / `CardScene`。新场景实现 `React.FC<SegmentProps>`，在 `episode.tsx` 的 `scenes: {N: Scene}` 里映射到指定句。
 7. **资源路径**：本期素材放 `public/episodes/<slug>/assets/`，用 `staticFile('episodes/<slug>/assets/xxx.png')` 引用；音频用 `staticFile(`${audioDir}/${item.audio}`)`。
 8. **类型集中**：数据结构定义在 `lib/types.ts`，JSON 导入处用 `as Manifest` / `as unknown as Record<number, Timeline>` 收窄。
