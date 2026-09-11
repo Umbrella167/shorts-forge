@@ -1,0 +1,21 @@
+{
+  "total": 5.43,
+  "items": [
+    {
+      "index": 1,
+      "text": "这是一期演示，用来验证可复用框架。",
+      "instruction": "用轻松自信的语气",
+      "duration": 3.065,
+      "audio": "1.mp3",
+      "timeline": "1.json"
+    },
+    {
+      "index": 2,
+      "text": "如果你不改这句，我就一直吼下去！",
+      "instruction": "用极其愤怒、大声吵架的语气",
+      "duration": 2.365,
+      "audio": "2.mp3",
+      "timeline": "2.json"
+    }
+  ]
+}

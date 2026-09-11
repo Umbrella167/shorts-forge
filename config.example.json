@@ -1,0 +1,9 @@
+{
+  "apiKey": "你的豆包语音 API Key",
+  "resourceId": "seed-tts-2.0",
+  "speaker": "zh_female_vv_uranus_bigtts",
+  "instruction": null,
+  "format": "mp3",
+  "sampleRate": 24000,
+  "concurrency": 6
+}

@@ -1,0 +1,25 @@
+{
+  "name": "shorts-forge",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "studio": "remotion studio src/index.ts --no-open",
+    "render": "remotion render src/index.ts",
+    "tts": "node scripts/tts.mjs",
+    "new-episode": "node scripts/new-episode.mjs"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.523",
+    "@remotion/media": "4.0.523",
+    "@remotion/player": "4.0.523",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "remotion": "4.0.523"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
+    "pngjs": "^7.0.0",
+    "typescript": "5.9.3"
+  }
+}
