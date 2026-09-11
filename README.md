@@ -9,6 +9,12 @@
 
 **关键词 / Keywords:** Remotion 短视频 · 豆包 TTS · 火山引擎语音合成 · AI 配音 · 竖屏视频 · 横屏视频 · 字级字幕 · 逐字字幕 · 口播视频自动化 · 分镜渲染 · short video generator · word-level subtitles · AI voiceover · vertical video
 
+## 演示 Demo
+
+<a href="docs/demo.mp4"><img src="docs/demo-poster.png" width="320" alt="点击播放演示视频" /></a>
+
+▶ 点击封面播放完整演示（[docs/demo.mp4](docs/demo.mp4)）
+
 ## 特性 Features
 
 - 豆包 TTS 逐句并行合成，**自带字级时间戳**（无需额外 ASR）
